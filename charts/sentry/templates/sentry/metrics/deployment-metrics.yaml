@@ -88,16 +88,7 @@ spec:
 {{ toYaml .Values.metrics.volumeMounts | indent 8 }}
 {{- end }}
 {{- if .Values.metrics.livenessProbe.enabled }}
-        livenessProbe:
-          httpGet:
-            path: /metrics
-            port: 9102
-            scheme: HTTP
-          initialDelaySeconds: {{ .Values.metrics.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.metrics.livenessProbe.periodSeconds }}
-          timeoutSeconds: {{ .Values.metrics.livenessProbe.timeoutSeconds }}
-          successThreshold: {{ .Values.metrics.livenessProbe.successThreshold }}
-          failureThreshold: {{ .Values.metrics.livenessProbe.failureThreshold }}
+          {{- omit .Values.metrics.livenessProbe "enabled" | toYaml | nindent 12 }}
 {{- end }}
 {{- if .Values.metrics.readinessProbe.enabled }}
         readinessProbe:
